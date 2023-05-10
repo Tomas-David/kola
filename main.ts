@@ -1,7 +1,17 @@
 
+// format komunikace "XYABL012"
 
-const m1 = PCAmotor.Motors.M1
-const m4 = PCAmotor.Motors.M4
+
+function car_motor(lw: number = 0 , rw:number = 0){
+    const ul = Math.map(lw, -100, 100, -255, 255)
+    const ur = Math.map(rw, -100, 100, -215, 215)
+    PCAmotor.MotorRun(PCAmotor.Motors.M1, -ul) 
+    PCAmotor.MotorRun(PCAmotor.Motors.M4, ur)
+
+}
+
+
+
 
 basic.forever(function () {
     basic.showLeds(`
@@ -11,15 +21,11 @@ basic.forever(function () {
         # . # . .
         . # . . .
         `)
+    radio.setGroup(23)
+    
+   
+radio.onReceivedString(function(receivedString: string) {
+    basic.showString("Hello!")
+})
 
-
-    input.onButtonPressed(Button.A, function () {
-        PCAmotor.MotorRun(m1, 500)
-        PCAmotor.MotorRun(m4, 500)
-    })
-
-    input.onButtonPressed(Button.B, function () {
-        
-        PCAmotor.MotorStopAll()
-    })
 })
